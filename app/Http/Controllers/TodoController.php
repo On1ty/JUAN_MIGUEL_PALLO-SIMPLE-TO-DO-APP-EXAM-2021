@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Todo;
 use Illuminate\Http\Request;
+use App\Http\Requests\UpdateValidationRequest;
 
 class TodoController extends Controller
 {
@@ -93,14 +94,9 @@ class TodoController extends Controller
      * @param  \App\Todo  $todo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(UpdateValidationRequest $request)
     {
-        $validatedData = $request->validate([
-            'id' => 'required',
-            'task' => 'required',
-            'owner' => 'required',
-            'status' => 'required',
-        ]);
+        $validatedData = $request->validated();
 
         Todo::whereId($request->id)->update($validatedData);
 
